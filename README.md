@@ -26,6 +26,7 @@ Hold the button for 2 seconds to enable or disable the micro SD card.
 
 ## Capturing Traffic
 To caputre the WiFi traffic, you need to connect a micro SD card. The faster the card is, the better.  
+It will not delete any files when you connect it, but I recommend strongly using an empty card to prevent any chance of data loss!  
 **It must be formatted to FAT32!**  
 I recommend formatting it again before using it, just to be sure.  
 
