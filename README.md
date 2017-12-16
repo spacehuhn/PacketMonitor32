@@ -32,7 +32,7 @@ I recommend formatting it again before using it, just to be sure.
 
 If you want to remove the card and keep the board running, hold the button for 2 seconds again until the "SD" disappears from the display.
   
-Every start of the board will create a new .pcap file. You can open these files with [Wireshark](https://www.wireshark.org/).
+Every start of the board will create a new .pcap file in the root folder of the SD. You can open these files with [Wireshark](https://www.wireshark.org/).
 
 **Note:**  
 Sometimes the device can get into a restart loop, because it crashes everytime when it's trying to write to the SD card. If that happens, make sure the card works and try to format it again.  
