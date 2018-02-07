@@ -1,4 +1,3 @@
-
 /* uncomment if the default 4 bit mode doesn't work */
 /* ------------------------------------------------ */
 // #define BOARD_HAS_1BIT_SDMMC true // forces 1bit mode for SD MMC
@@ -19,13 +18,13 @@
 using namespace std;
 
 /* ===== compile settings ===== */
-#define MAX_CH 14 // 1 - 14 channels (1-11 for US, 1-13 for EU and 1-14 for Japan)
-#define SNAP_LEN 2324 // max len of each recieved packet
+#define MAX_CH 14       // 1 - 14 channels (1-11 for US, 1-13 for EU and 1-14 for Japan)
+#define SNAP_LEN 2324   // max len of each recieved packet
 
-#define BUTTON_PIN 5 // button to change the channel
+#define BUTTON_PIN 5    // button to change the channel
 
-#define USE_DISPLAY // comment out if you don't want to use the OLED display
-#define FLIP_DISPLAY // comment out if you don't like to flip it
+#define USE_DISPLAY     // comment out if you don't want to use the OLED display
+#define FLIP_DISPLAY    // comment out if you don't like to flip it
 #define SDA_PIN 26
 #define SCL_PIN 27
 #define MAX_X 128
@@ -62,9 +61,9 @@ bool buttonEnabled = true;
 uint32_t lastDrawTime;
 uint32_t lastButtonTime;
 uint32_t tmpPacketCounter;
-uint32_t pkts[MAX_X]; // here the packets per second will be saved
-uint32_t deauths = 0; // deauth frames per second
-unsigned int ch = 1; // current 802.11 channel
+uint32_t pkts[MAX_X];       // here the packets per second will be saved
+uint32_t deauths = 0;       // deauth frames per second
+unsigned int ch = 1;        // current 802.11 channel
 int rssiSum;
 
 /* ===== functions ===== */
@@ -127,11 +126,11 @@ void wifi_promiscuous(void* buf, wifi_promiscuous_pkt_type_t type) {
 
   if (type == WIFI_PKT_MGMT && (pkt->payload[0] == 0xA0 || pkt->payload[0] == 0xC0 )) deauths++;
 
-  if (type == WIFI_PKT_MISC) return; // wrong packet type
-  if (ctrl.sig_len > SNAP_LEN) return; // packet too long
+  if (type == WIFI_PKT_MISC) return;             // wrong packet type
+  if (ctrl.sig_len > SNAP_LEN) return;           // packet too long
 
   uint32_t packetLength = ctrl.sig_len;
-  if (type == WIFI_PKT_MGMT) packetLength -= 4; // fix for known bug in the IDF https://github.com/espressif/esp-idf/issues/886
+  if (type == WIFI_PKT_MGMT) packetLength -= 4;  // fix for known bug in the IDF https://github.com/espressif/esp-idf/issues/886
 
   //Serial.print(".");
   tmpPacketCounter++;
@@ -150,7 +149,21 @@ void draw() {
   else rssi = rssiSum;
 
   display.clear();
-  display.drawString(0, 0, (String)ch + " | " + (String)rssi + " | Pkts " + (String)tmpPacketCounter + " [" + deauths + "]" + (useSD ? " | SD" : ""));
+
+  display.setTextAlignment(TEXT_ALIGN_RIGHT);
+  display.drawString( 10, 0, (String)ch);
+  display.drawString( 14, 0, ("|"));
+  display.drawString( 30, 0, (String)rssi);
+  display.drawString( 34, 0, ("|"));
+  display.drawString( 80, 0, (String)tmpPacketCounter);
+  display.drawString( 84, 0, ("["));
+  display.drawString(100, 0, (String)deauths);
+  display.drawString(104, 0, ("]"));
+  display.drawString(108, 0, ("|"));
+  display.drawString(126, 0, (useSD ? "SD" : ""));
+  display.setTextAlignment(TEXT_ALIGN_LEFT);
+  display.drawString( 36,  0, ("Pkts:"));
+
   display.drawLine(0, 63 - MAX_Y, MAX_X, 63 - MAX_Y);
   for (int i = 0; i < MAX_X; i++) {
     len = pkts[i] * multiplicator;
