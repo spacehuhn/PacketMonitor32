@@ -155,12 +155,12 @@ void draw() {
   display.drawString( 14, 0, ("|"));
   display.drawString( 30, 0, (String)rssi);
   display.drawString( 34, 0, ("|"));
-  display.drawString( 80, 0, (String)tmpPacketCounter);
-  display.drawString( 84, 0, ("["));
-  display.drawString(100, 0, (String)deauths);
-  display.drawString(104, 0, ("]"));
-  display.drawString(108, 0, ("|"));
-  display.drawString(126, 0, (useSD ? "SD" : ""));
+  display.drawString( 82, 0, (String)tmpPacketCounter);
+  display.drawString( 87, 0, ("["));
+  display.drawString(106, 0, (String)deauths);
+  display.drawString(110, 0, ("]"));
+  display.drawString(114, 0, ("|"));
+  display.drawString(128, 0, (useSD ? "SD" : ""));
   display.setTextAlignment(TEXT_ALIGN_LEFT);
   display.drawString( 36,  0, ("Pkts:"));
 
